@@ -1,3 +1,7 @@
+# IDE
+.idea
+
+# Build-specific
 node_modules
 src/Notes/bin
 src/Notes/obj
