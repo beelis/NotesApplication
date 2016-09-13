@@ -71,7 +71,8 @@
 
   "buildOptions": {
     "emitEntryPoint": true,
-    "preserveCompilationContext": true
+    "preserveCompilationContext": true,
+    "outputName": "hsr-todo"
   },
 
   "runtimeOptions": {
@@ -91,7 +92,7 @@
   },
 
   "scripts": {
-    "prepublish": [ "../../node_modules/bower/bin/bower install", "dotnet bundle" ],
+    "prepublish": ["env bower install", "env dotnet bundle" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }
