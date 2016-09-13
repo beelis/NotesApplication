@@ -11,11 +11,25 @@ namespace Notes
     {
         public static void Main(string[] args)
         {
-            var host = new WebHostBuilder()
+            String url = "";
+            foreach (string arg in args)
+            {
+                if (arg.ToString().StartsWith("http"))
+                {
+                    url = arg.ToString();
+                }
+            }
+            if (url.Length < 1)
+            {
+                url = "http://0.0.0.0:5000";
+            }
+
+        var host = new WebHostBuilder()
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
                 .UseIISIntegration()
                 .UseStartup<Startup>()
+                .UseUrls(url)
                 .Build();
 
             host.Run();
