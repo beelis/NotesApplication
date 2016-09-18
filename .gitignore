@@ -5,3 +5,6 @@
 node_modules
 src/Notes/bin
 src/Notes/obj
+
+# OS X finder
+*.DS_Store

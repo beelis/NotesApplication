@@ -28,6 +28,7 @@ namespace Notes.Models
 
         public Boolean Finished { get; set; }
 
+        [Required]
         public string Title { get; set; }
 
         public string NoteText { get; set; }

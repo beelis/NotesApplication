@@ -14,34 +14,34 @@
         <div class="form-group">
             <label asp-for="Title" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="Title" class="form-control" />
+                <input asp-for="Title" class="form-control input-lg" />
                 <span asp-validation-for="Title" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
             <label asp-for="NoteText" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <textarea rows="4" cols="50" asp-for="NoteText"></textarea>
+                <textarea rows="4" cols="50" class="form-control" asp-for="NoteText"></textarea>
                 <span asp-validation-for="NoteText" class="text-danger" />
             </div>
         </div>
         <div hidden class="form-group">
             <label asp-for="UserId" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <select asp-for="UserId" class="form-control input-lg" asp-items="ViewBag.UserId"></select>
             </div>
         </div>
         <div class="form-group">
             <label asp-for="PriorityEnum" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="PriorityEnum" asp-items="Priority.getPriorityList()" class="form-control"></select>
+                <select asp-for="PriorityEnum" asp-items="Priority.getPriorityList()" class="form-control input-lg"></select>
                 <span asp-validation-for="PriorityEnum" class="text-danger" />
             </div>
         </div>
         <div class="form-group">
             <label asp-for="FinishDate" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <input asp-for="FinishDate" class="form-control" />
+                <input asp-for="FinishDate" type="datetime-local" class="form-control input-lg" />
                 <span asp-validation-for="FinishDate" class="text-danger" />
             </div>
         </div>
