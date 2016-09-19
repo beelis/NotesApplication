@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Notes.Models
@@ -17,13 +18,17 @@ namespace Notes.Models
 
         [Display(Name = "Due Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy - mm:HH}")]
         public DateTime FinishDate { get; set; }
 
         [Required]
         [Display(Name = "Creation Date")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd.MM.yyyy}")]
         public DateTime CreationDate { get; set; }
 
+        [Display(Name = "Priority")]
+        [DisplayFormat(DataFormatString = "<div class=\"rating\">{0}</div>", HtmlEncode = false)]
         public PriorityEnum PriorityEnum { get; set; }
 
         public Boolean Finished { get; set; }
@@ -31,6 +36,7 @@ namespace Notes.Models
         [Required]
         public string Title { get; set; }
 
+        [Display(Name = "Description")]
         public string NoteText { get; set; }
 
     }

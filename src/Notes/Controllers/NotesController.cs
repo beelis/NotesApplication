@@ -77,6 +77,7 @@ namespace Notes.Controllers
         {
             if (ModelState.IsValid)
             {
+                note.CreationDate = DateTime.Now;
                 _context.Add(note);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");

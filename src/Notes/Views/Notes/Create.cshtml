@@ -34,7 +34,7 @@
         <div class="form-group">
             <label asp-for="PriorityEnum" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="PriorityEnum" asp-items="Priority.getPriorityList()" class="form-control input-lg"></select>
+                <input asp-for="PriorityEnum" type="text" id="importanceInput" class="rating" data-size="lg" />
                 <span asp-validation-for="PriorityEnum" class="text-danger" />
             </div>
         </div>
@@ -59,4 +59,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script type="text/javascript">
+        $('#importanceInput').rating({'step': 1, 'showCaption': false, 'showClear': false});
+    </script>
 }

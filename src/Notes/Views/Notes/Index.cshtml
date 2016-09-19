@@ -1,3 +1,4 @@
+@using System
 @model IEnumerable<Notes.Models.Note>
 
 @{
@@ -49,7 +50,7 @@
                 @Html.DisplayFor(modelItem => item.NoteText)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.PriorityEnum)
+                <div class="rating" data-stars="@Convert.ToInt32(item.PriorityEnum)">@item.PriorityEnum</div>
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Title)
@@ -63,3 +64,11 @@
 }
     </tbody>
 </table>
+
+@section Scripts {
+    <script type="text/javascript">
+        $('.rating').each(function () {
+            $(this).rating({'displayOnly': true, 'size': 'xs', 'emptyStar': '<i class="glyphicon glyphicon-star"></i>'});
+        });
+    </script>
+}
