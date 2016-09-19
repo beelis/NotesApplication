@@ -1,6 +1,7 @@
 Installation
 ############
-`npm install && cd src/Notes && bower install`
+`npm install`
+Note: There's a postinstall-script that will take care of bower dependencies, so `npm install` really is enough. If you have a global bower installation, just run `bower install` inside src/Notes.
 
 Build
 #####
