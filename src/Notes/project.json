@@ -92,7 +92,7 @@
   },
 
   "scripts": {
-    "prepublish": ["env npm run bundle", "dotnet bundle" ],
+    "prepublish": ["dotnet bundle" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }

@@ -1,4 +1,4 @@
-{
+﻿{
   "name": "notes",
   "version": "1.0.0",
   "description": "",
@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "echo \"Error: no start specified\" && exit 1",
-    "bundle": "cd src/Notes && bower install"
+    "postinstall": "cd src/Notes && bower install"
   },
   "repository": {
     "type": "git",
