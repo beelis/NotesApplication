@@ -94,3 +94,7 @@
 	*/
 	.no-more-tables td:before { content: attr(data-title); }
 }
+
+body.theme-2 {
+    background-color: red;
+}
