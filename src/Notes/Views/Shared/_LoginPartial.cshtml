@@ -22,6 +22,9 @@
 
     <form asp-area="" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
+            <li id="themeToggleAjaxContainer">
+                @await Html.PartialAsync("../Account/ToggleTheme")
+            </li>
             <li>
                 <a asp-area="" asp-controller="Manage" asp-action="Index" title="Manage">Hello @UserManager.GetUserName(User)!</a>
             </li>

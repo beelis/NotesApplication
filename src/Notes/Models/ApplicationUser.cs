@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace Notes.Models
@@ -9,5 +6,17 @@ namespace Notes.Models
     // Add profile data for application users by adding properties to the ApplicationUser class
     public class ApplicationUser : IdentityUser
     {
+        public ApplicationUser()
+        {
+            IncludeFinished = false;
+            SortingField = "FinishDate";
+            SortingAscending = true;
+            ThemeSelection = 1;
+        }
+
+        public Boolean IncludeFinished { get; set; }
+        public String SortingField { get; set; }
+        public Boolean SortingAscending { get; set; }
+        public int ThemeSelection { get; set; }
     }
 }

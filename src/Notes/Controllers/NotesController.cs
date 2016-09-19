@@ -29,7 +29,7 @@ namespace Notes.Controllers
 
         // GET: Notes
         [Authorize]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Boolean partial = false)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var userId = await _userManager.GetUserIdAsync(user);
@@ -42,8 +42,76 @@ namespace Notes.Controllers
                 notes = notes.Where(s => s.UserId.Equals(userId));
             }
 
+            if (!user.IncludeFinished)
+            {
+                notes = notes.Where(s => !s.Finished);
+            }
+
+            // Sort Notes
+            switch (user.SortingField)
+            {
+                case "FinishDate":
+                    notes = user.SortingAscending ? notes.OrderBy(s => s.FinishDate) : notes.OrderByDescending(s => s.FinishDate);
+                    break;
+                case "CreationDate":
+                    notes = user.SortingAscending ? notes.OrderBy(s => s.CreationDate) : notes.OrderByDescending(s => s.CreationDate);
+                    break;
+                case "PriorityEnum":
+                    notes = user.SortingAscending ? notes.OrderBy(s => s.PriorityEnum) : notes.OrderByDescending(s => s.PriorityEnum);
+                    break;
+            }
+
             var applicationDbContext = _context.Note.Include(n => n.User);
+            ViewData["activeSortField"] = user.SortingField;
+            ViewData["includeFinished"] = user.IncludeFinished;
+
+            if (partial)
+            {
+                return PartialView("_List", await notes.ToListAsync());
+            }
             return View(await notes.ToListAsync());
+        }
+
+        // Ajax: ToggleHideFinished
+        [Authorize]
+        public async Task<IActionResult> ToggleHideFinished()
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (!user.Equals(null))
+            {
+                user.IncludeFinished = !user.IncludeFinished;
+                await _userManager.UpdateAsync(user);
+                _context.SaveChanges();
+            }
+
+            return await Index(true);
+        }
+
+        // POST Ajax: Set Sorting
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ToggleSortSetting(string fieldToSortBy)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (!user.Equals(null) && (fieldToSortBy.Equals("FinishDate") || fieldToSortBy.Equals("CreationDate") || fieldToSortBy.Equals("PriorityEnum")))
+            {
+                if (user.SortingField.Equals(fieldToSortBy))
+                {
+                    user.SortingAscending = !user.SortingAscending;
+                }
+                else
+                {
+                    user.SortingField = fieldToSortBy;
+                    user.SortingAscending = true;
+                }
+                await _userManager.UpdateAsync(user);
+                _context.SaveChanges();
+            }
+
+            return await Index(true);
         }
 
         // GET: Notes/Details/5
