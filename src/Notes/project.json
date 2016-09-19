@@ -92,7 +92,7 @@
   },
 
   "scripts": {
-    "prepublish": ["env bower install", "env dotnet bundle" ],
+    "prepublish": ["npm run bundle", "dotnet bundle" ],
     "postpublish": [ "dotnet publish-iis --publish-folder %publish:OutputPath% --framework %publish:FullTargetFramework%" ]
   }
 }

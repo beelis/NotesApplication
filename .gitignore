@@ -3,6 +3,7 @@
 
 # Build-specific
 node_modules
+src/Notes/project.lock.json
 src/Notes/bin
 src/Notes/obj
 src/Notes/wwwroot/lib/*
