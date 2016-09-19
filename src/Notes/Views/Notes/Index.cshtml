@@ -1,3 +1,5 @@
+@using System
+@using Microsoft.AspNetCore.Http.Features
 @model IEnumerable<Notes.Models.Note>
 
 @{
@@ -9,6 +11,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
+<div class="no-more-tables">
 <table class="table">
     <thead>
         <tr>
@@ -36,22 +39,22 @@
     <tbody>
 @foreach (var item in Model) {
         <tr>
-            <td>
+            <td data-title="@Html.DisplayNameFor(model => model.CreationDate)">
                 @Html.DisplayFor(modelItem => item.CreationDate)
             </td>
-            <td>
+            <td data-title="@Html.DisplayNameFor(model => model.FinishDate)">
                 @Html.DisplayFor(modelItem => item.FinishDate)
             </td>
-            <td>
+            <td data-title="@Html.DisplayNameFor(model => model.Finished)">
                 @Html.DisplayFor(modelItem => item.Finished)
             </td>
-            <td>
+            <td data-title="@Html.DisplayNameFor(model => model.NoteText)">
                 @Html.DisplayFor(modelItem => item.NoteText)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PriorityEnum)
+            <td data-title="@Html.DisplayNameFor(model => model.PriorityEnum)">
+                <div class="rating" data-stars="@Convert.ToInt32(item.PriorityEnum)">@item.PriorityEnum</div>
             </td>
-            <td>
+            <td data-title="@Html.DisplayNameFor(model => model.Title)">
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
@@ -63,3 +66,11 @@
 }
     </tbody>
 </table>
+</div>
+@section Scripts {
+    <script type="text/javascript">
+        $('.rating').each(function () {
+            $(this).rating({'displayOnly': true, 'size': 'xs', 'emptyStar': '<i class="glyphicon glyphicon-star"></i>'});
+        });
+    </script>
+}

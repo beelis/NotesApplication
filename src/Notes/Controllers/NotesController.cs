@@ -1,14 +1,14 @@
 using System;
-using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Notes.Data;
 using Notes.Models;
 using Microsoft.Extensions.Logging;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
 namespace Notes.Controllers
@@ -19,7 +19,8 @@ namespace Notes.Controllers
         private readonly ILogger _logger;
         private readonly UserManager<ApplicationUser> _userManager;
 
-        public NotesController(ApplicationDbContext context, ILoggerFactory loggerFactory, UserManager<ApplicationUser> userManager)
+        public NotesController(ApplicationDbContext context, ILoggerFactory loggerFactory,
+            UserManager<ApplicationUser> userManager)
         {
             _context = context;
             _logger = loggerFactory.CreateLogger<NotesController>();
@@ -27,13 +28,14 @@ namespace Notes.Controllers
         }
 
         // GET: Notes
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var userId = await _userManager.GetUserIdAsync(user);
 
             var notes = from m in _context.Note
-                         select m;
+                        select m;
 
             if (!String.IsNullOrEmpty(userId))
             {
@@ -45,6 +47,7 @@ namespace Notes.Controllers
         }
 
         // GET: Notes/Details/5
+        [Authorize]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -62,6 +65,7 @@ namespace Notes.Controllers
         }
 
         // GET: Notes/Create
+        [Authorize]
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
@@ -72,11 +76,14 @@ namespace Notes.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,User,CreationDate,UserId,FinishDate,Finished,NoteText,PriorityEnum,Title")] Note note)
+        public async Task<IActionResult> Create(
+            [Bind("ID,User,CreationDate,UserId,FinishDate,Finished,NoteText,PriorityEnum,Title")] Note note)
         {
             if (ModelState.IsValid)
             {
+                note.CreationDate = DateTime.Now;
                 _context.Add(note);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");
@@ -90,6 +97,7 @@ namespace Notes.Controllers
         }
 
         // GET: Notes/Edit/5
+        [Authorize]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -110,8 +118,10 @@ namespace Notes.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,CreationDate,UserId,FinishDate,Finished,NoteText,PriorityEnum,Title")] Note note)
+        public async Task<IActionResult> Edit(int id,
+            [Bind("ID,CreationDate,UserId,FinishDate,Finished,NoteText,PriorityEnum,Title")] Note note)
         {
             if (id != note.ID)
             {
@@ -143,6 +153,7 @@ namespace Notes.Controllers
         }
 
         // GET: Notes/Delete/5
+        [Authorize]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -161,6 +172,7 @@ namespace Notes.Controllers
 
         // POST: Notes/Delete/5
         [HttpPost, ActionName("Delete")]
+        [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {

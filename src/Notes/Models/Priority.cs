@@ -2,27 +2,25 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Notes.Models
 {
     public enum PriorityEnum
     {
         [Display(Name = "Very Low")]
-        VeryLow,
+        VeryLow = 1,
 
         [Display(Name = "Low")]
-        Low,
+        Low = 2,
 
         [Display(Name = "Normal")]
-        Normal,
+        Normal = 3,
 
         [Display(Name = "High")]
-        High,
+        High = 4,
 
         [Display(Name = "Very High")]
-        VeryHigh
+        VeryHigh = 5
     }
 
     public class Priority
