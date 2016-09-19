@@ -37,7 +37,22 @@ namespace Notes.Controllers
             _logger = loggerFactory.CreateLogger<AccountController>();
         }
 
-        //
+        // Get (Ajax); /Account/ToggleTheme
+        [Authorize]
+        public async Task<IActionResult> ToggleTheme()
+        {
+
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+
+            if (!user.Equals(null))
+            {
+                user.ThemeSelection = user.ThemeSelection.Equals(1) ? 2 : 1;
+                await _userManager.UpdateAsync(user);
+            }
+            return PartialView();
+        }
+
+            //
         // GET: /Account/Login
         [HttpGet]
         [AllowAnonymous]
