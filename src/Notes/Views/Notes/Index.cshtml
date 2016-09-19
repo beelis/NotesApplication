@@ -3,70 +3,80 @@
 @model IEnumerable<Notes.Models.Note>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "List";
 }
 
-<h2>Index</h2>
+<h2>List of my Todos</h2>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn" asp-action="Create">Create New</a>
 </p>
-<div class="no-more-tables">
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.CreationDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.FinishDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Finished)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NoteText)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.PriorityEnum)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Title)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td data-title="@Html.DisplayNameFor(model => model.CreationDate)">
-                @Html.DisplayFor(modelItem => item.CreationDate)
-            </td>
-            <td data-title="@Html.DisplayNameFor(model => model.FinishDate)">
-                @Html.DisplayFor(modelItem => item.FinishDate)
-            </td>
-            <td data-title="@Html.DisplayNameFor(model => model.Finished)">
-                @Html.DisplayFor(modelItem => item.Finished)
-            </td>
-            <td data-title="@Html.DisplayNameFor(model => model.NoteText)">
-                @Html.DisplayFor(modelItem => item.NoteText)
-            </td>
-            <td data-title="@Html.DisplayNameFor(model => model.PriorityEnum)">
-                <div class="rating" data-stars="@Convert.ToInt32(item.PriorityEnum)">@item.PriorityEnum</div>
-            </td>
-            <td data-title="@Html.DisplayNameFor(model => model.Title)">
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
-            </td>
-        </tr>
+
+@if (Model.length > 0)
+{
+    <div class="no-more-tables">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinishDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Finished)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.NoteText)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PriorityEnum)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td data-title="@Html.DisplayNameFor(model => model.CreationDate)">
+                        @Html.DisplayFor(modelItem => item.CreationDate)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.FinishDate)">
+                        @Html.DisplayFor(modelItem => item.FinishDate)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.Finished)">
+                        @Html.DisplayFor(modelItem => item.Finished)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.NoteText)">
+                        @Html.DisplayFor(modelItem => item.NoteText)
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.PriorityEnum)">
+                        <div class="rating" data-stars="@Convert.ToInt32(item.PriorityEnum)">@item.PriorityEnum</div>
+                    </td>
+                    <td data-title="@Html.DisplayNameFor(model => model.Title)">
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
 }
-    </tbody>
-</table>
-</div>
+else
+{
+    <p>no Notes found</p>
+}
+
 @section Scripts {
     <script type="text/javascript">
         $('.rating').each(function () {
