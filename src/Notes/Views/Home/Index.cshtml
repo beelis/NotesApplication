@@ -2,19 +2,20 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
-    <ol class="carousel-indicators">
-        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    </ol>
+<div id="myCarousel" class="carousel" data-ride="carousel" data-interval="6000">
     <div class="carousel-inner" role="listbox">
         <div class="item active">
-            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive" />
+            <img src="~/images/banner1.svg" alt="ASP.NET" class="img-responsive"/>
             <div class="carousel-caption" role="option">
                 <p>
-                    Welcome to the Notes Application, please log in to see and manage your notes.
-                    
-                    the current logged in user is @User.Identity.Name;
-                    
+                    @{
+                        var messageTemplate = "Welcome{0}to the Todo Application.{1}";
+                        var message = "";
+                        message = (User.Identity.Equals(null))
+                            ? string.Format(messageTemplate, " ", "<br />Please log in to see and manage your notes.")
+                            : string.Format(messageTemplate, " " + User.Identity.Name + " ", "");
+                        <span>@message</span>
+                    }
                 </p>
             </div>
         </div>
