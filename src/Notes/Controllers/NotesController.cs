@@ -27,12 +27,17 @@ namespace Notes.Controllers
             _userManager = userManager;
         }
 
-        // GET: Notes
-        [Authorize]
+        private async Task<ApplicationUser> GetCurrentUser()
+        {
+            return await _userManager.GetUserAsync(HttpContext.User);
+        }
+
+    // GET: Notes
+    [Authorize]
         public async Task<IActionResult> Index(Boolean partial = false)
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var userId = await _userManager.GetUserIdAsync(user);
+            var user = await GetCurrentUser();
+            var userId = user.Id;
 
             var notes = from m in _context.Note
                         select m;
@@ -134,9 +139,11 @@ namespace Notes.Controllers
 
         // GET: Notes/Create
         [Authorize]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            var currentUser = await GetCurrentUser();
+            _logger.LogDebug($"The current user id is {currentUser.Id}");
+            ViewData["UserId"] = currentUser.Id;
             return View();
         }
 
@@ -160,7 +167,6 @@ namespace Notes.Controllers
             {
                 _logger.LogWarning($"The model state is invalid {ModelState.ValidationState}");
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", note.UserId);
             return View(note);
         }
 
@@ -178,7 +184,6 @@ namespace Notes.Controllers
             {
                 return NotFound();
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", note.UserId);
             return View(note);
         }
 
@@ -216,7 +221,6 @@ namespace Notes.Controllers
                 }
                 return RedirectToAction("Index");
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", note.UserId);
             return View(note);
         }
 
