@@ -26,11 +26,16 @@ namespace Notes.Controllers
             _userManager = userManager;
         }
 
+        private async Task<ApplicationUser> GetCurrentUser()
+        {
+            return await _userManager.GetUserAsync(HttpContext.User);
+        }
+
         // GET: Notes
         public async Task<IActionResult> Index()
         {
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var userId = await _userManager.GetUserIdAsync(user);
+            var user = await GetCurrentUser();
+            var userId = user.Id;
 
             var notes = from m in _context.Note
                          select m;
@@ -62,9 +67,11 @@ namespace Notes.Controllers
         }
 
         // GET: Notes/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
+            var currentUser = await GetCurrentUser();
+            _logger.LogDebug($"The current user id is {currentUser.Id}");
+            ViewData["UserId"] = currentUser.Id;
             return View();
         }
 
@@ -77,6 +84,7 @@ namespace Notes.Controllers
         {
             if (ModelState.IsValid)
             {
+                note.CreationDate = DateTime.Now;
                 _context.Add(note);
                 await _context.SaveChangesAsync();
                 return RedirectToAction("Index");

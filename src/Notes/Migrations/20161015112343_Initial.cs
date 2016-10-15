@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace Notes.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -155,12 +155,12 @@ namespace Notes.Migrations
                     ID = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     CreationDate = table.Column<DateTime>(nullable: false),
-                    UserId = table.Column<string>(nullable: false),
                     FinishDate = table.Column<DateTime>(nullable: false),
                     Finished = table.Column<bool>(nullable: false),
                     NoteText = table.Column<string>(nullable: true),
                     PriorityEnum = table.Column<int>(nullable: false),
-                    Title = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: true),
+                    UserId = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {

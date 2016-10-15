@@ -8,8 +8,8 @@ using Notes.Data;
 namespace Notes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160911082336_initial")]
-    partial class initial
+    [Migration("20161015112511_Test2")]
+    partial class Test2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -180,9 +180,6 @@ namespace Notes.Migrations
 
                     b.Property<DateTime>("CreationDate");
 
-                    b.Property<string>("UserId")
-                        .IsRequired();
-
                     b.Property<DateTime>("FinishDate");
 
                     b.Property<bool>("Finished");
@@ -192,6 +189,9 @@ namespace Notes.Migrations
                     b.Property<int>("PriorityEnum");
 
                     b.Property<string>("Title");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
 
                     b.HasKey("ID");
 

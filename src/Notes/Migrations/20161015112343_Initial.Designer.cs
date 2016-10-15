@@ -8,8 +8,8 @@ using Notes.Data;
 namespace Notes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20160911092348_replaceUser")]
-    partial class replaceUser
+    [Migration("20161015112343_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

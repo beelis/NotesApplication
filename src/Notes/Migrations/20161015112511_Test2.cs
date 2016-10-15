@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Notes.Migrations
 {
-    public partial class replaceUser : Migration
+    public partial class Test2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
