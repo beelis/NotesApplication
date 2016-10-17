@@ -86,12 +86,9 @@ namespace Notes.Test
             note.UserId = "5asdf";
             await controller.Create(note);
             note.Title = "New Title";
-            await controller.Edit(note.ID, note);
+            var result = await controller.Edit(note.ID, note);
 
-            var result = await controller.Details(note.ID);
-
-
-            Assert.IsType<ViewResult>(result);
+            Assert.IsType<RedirectToActionResult>(result);
         }
     }
 
