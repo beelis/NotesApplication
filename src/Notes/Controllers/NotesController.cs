@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -154,7 +155,7 @@ namespace Notes.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(
-            [Bind("ID,User,CreationDate,UserId,FinishDate,Finished,NoteText,PriorityEnum,Title")] Note note)
+            [Bind("ID,CreationDate,UserId,FinishDate,Finished,NoteText,PriorityEnum,Title")] Note note)
         {
             if (ModelState.IsValid)
             {
@@ -184,6 +185,9 @@ namespace Notes.Controllers
             {
                 return NotFound();
             }
+            var currentUser = await GetCurrentUser();
+            ViewData["UserId"] = currentUser.Id;
+
             return View(note);
         }
 
@@ -194,7 +198,7 @@ namespace Notes.Controllers
         [Authorize]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id,
-            [Bind("ID,CreationDate,UserId,FinishDate,Finished,NoteText,PriorityEnum,Title")] Note note)
+            [Bind("ID,UserId,CreationDate,FinishDate,Finished,NoteText,PriorityEnum,Title")] Note note)
         {
             if (id != note.ID)
             {
@@ -220,6 +224,10 @@ namespace Notes.Controllers
                     }
                 }
                 return RedirectToAction("Index");
+            }
+            else
+            {
+                _logger.LogWarning($"The model state is invalid {ModelState.ValidationState}");
             }
             return View(note);
         }
