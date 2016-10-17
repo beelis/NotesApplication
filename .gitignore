@@ -3,10 +3,15 @@
 
 # Build-specific
 node_modules
+
+# Solution Specific
 src/Notes/project.lock.json
 src/Notes/bin
 src/Notes/obj
 src/Notes/wwwroot/lib/*
+Test/Notes.Test/project.lock.json
+Test/Notes.Test/bin
+Test/Notes.Test/obj
 
 # OS X finder
 *.DS_Store
